@@ -1,6 +1,6 @@
 # superposition-in-continuous-chain-of-thought
 
-## Quick Start
+## 🚀 Quick Start
 
 ### 1. Install Dependencies
 
