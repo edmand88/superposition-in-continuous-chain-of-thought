@@ -1,22 +1,25 @@
+import os
 import torch
-from transformers import AutoTokenizer, AutoModel
+from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 
-#should try other maybe larger models
-tokenizer_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
-model_name = tokenizer_name
+project_dir = "/Users/wuyuchen/Desktop/SCCOT/"
+os.makedirs(project_dir, exist_ok=True)
 
-# Load the tokenizer
-tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
+model_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+# try other maybe larger models later
+tokenizer = AutoTokenizer.from_pretrained(model_name)
 tokenizer.add_special_tokens({'pad_token': '[PAD]'})
 
-# Load the pre-trained model
-model = AutoModel.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name)
 
-# Extract the embeddings layer
+# extract embedding
 embeddings = model.get_input_embeddings()
+emb_path = os.path.join(project_dir, "embeddings_qwen.pth")
+torch.save(embeddings.state_dict(), emb_path)
+print(f"Saved embeddings to {emb_path}")
 
-# Print out the embeddings
-print(f"Extracted Embeddings Layer for {model_name}: {embeddings}")
-
-# Save the embeddings layer
-torch.save(embeddings.state_dict(), "embeddings_qwen.pth")
+# extract unembedding
+unembedding = model.lm_head.weight
+unemb_path = os.path.join(project_dir, "unembedding_qwen.pth")
+torch.save(unembedding.detach().cpu(), unemb_path)
+print(f"Saved unembedding to {unemb_path}")
