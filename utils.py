@@ -49,17 +49,3 @@ def prompt_to_embeddings(model, tokenizer, prompt:str):
     token_str = [tokenizer.decode(t_id, skip_special_tokens=True) for t_id in token_id_list]
 
     return token_id_list, embeddings, token_str
-
-def find_similar_logits(model, tokenizer, embedding_vector, n=10):
-    """
-    Use unembedding (lm_head) to convert embedding_vector to logit and find top-k
-    """
-    if not isinstance(embedding_vector, torch.Tensor):
-        embedding_vector = torch.tensor(embedding_vector)
-    logits = model.unembedding(embedding_vector.unsqueeze(0))  # [1, vocab]
-    topk = torch.topk(logits, n)
-    results = []
-    for idx, val in zip(topk.indices[0], topk.values[0]):
-        word = tokenizer.decode(idx)
-        results.append((word, val.item()))
-    return results
