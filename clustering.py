@@ -1,8 +1,11 @@
 import sklearn
 from sklearn.cluster import KMeans
+from sklearn.decomposition import PCA
 import numpy as np
 import torch
 from load_embeddings import load_embedding_model
+
+#Kmeans
 
 random_state = 42
 n_clusters = 10
@@ -20,3 +23,8 @@ print(kmeans.labels_)
 
 for token, label in list(token_clusters.items())[:10]:
     print(f"Token: {token}, Cluster: {label}")
+
+
+#PCA
+pca = PCA(n_components=2)
+pca.fit(all_embeddings)
