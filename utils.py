@@ -39,13 +39,35 @@ def prompt_to_embeddings(model, tokenizer, prompt:str):
     input_ids = tokens['input_ids']
 
     # make a forward pass
-    outputs = model(input_ids)
+    embeddings, _ = model(input_ids)
 
     # directly use the embeddings layer to get embeddings for the input_ids
-    embeddings = outputs
+    embeddings = embeddings
 
     # print each token
     token_id_list = tokenizer.encode(prompt, add_special_tokens=True)
     token_str = [tokenizer.decode(t_id, skip_special_tokens=True) for t_id in token_id_list]
 
     return token_id_list, embeddings, token_str
+
+def find_similar_logits(model, tokenizer, embedding_vector, n=10):
+    """
+    Use unembedding (lm_head) to convert embedding_vector to logit and find top-k
+    """
+    if not isinstance(embedding_vector, torch.Tensor):
+        embedding_vector = torch.tensor(embedding_vector)
+    logits = model.unembedding(embedding_vector.unsqueeze(0))  # [1, vocab]
+    topk = torch.topk(logits, n)
+    results = []
+    for idx, val in zip(topk.indices[0], topk.values[0]):
+        word = tokenizer.decode(idx)
+        results.append((word, val.item()))
+    return results
+
+def get_token_embedding(model, tokenizer, word):
+    _, embedding_word, _ = prompt_to_embeddings(model, tokenizer, word)
+    return embedding_word[0, -1, :]
+
+def get_all_tokens(tokenizer):
+    tokens = list(tokenizer.get_vocab().keys())
+    return tokens
