@@ -82,8 +82,28 @@ model, tokenizer = load_embedding_model(151936, 1536, "embeddings_qwen.pth", "un
 # for w, s in top_words:
 #     print(f"{w:15s}  {s:.4f}")
 
-#Different categories
 #5
+# one = get_token_embedding(model, tokenizer, "one")
+# two = get_token_embedding(model, tokenizer, "two") #appears
+# three = get_token_embedding(model, tokenizer, "three") #appears
+# four = get_token_embedding(model, tokenizer, "four") #appears
+# five = get_token_embedding(model, tokenizer, "five") #appears
+# six = get_token_embedding(model, tokenizer, "six") #appears
+# seven = get_token_embedding(model, tokenizer, "seven") #appears
+# eight = get_token_embedding(model, tokenizer, "eight") #appears
+# nine = get_token_embedding(model, tokenizer, "nine") #appears
+# zero = get_token_embedding(model, tokenizer, "zero")
+
+# weighted_embedding_number = 0.1*one + 0.1*two + 0.1*three + 0.1*four + 0.1*five + 0.1*six + 0.1*seven + 0.1*eight + 0.1*nine + 0.1*zero
+# top_words = find_similar_logits(model, tokenizer, weighted_embedding_number, n=20)
+
+# for w, s in top_words:
+#     print(f"{w:15s}  {s:.4f}")
+
+# all appears in top 20 except "one" and "zero"
+
+#Different categories
+#6
 
 # blue = get_token_embedding(model, tokenizer, "blue") #appears
 # red = get_token_embedding(model, tokenizer, "red") #appears
@@ -102,7 +122,7 @@ model, tokenizer = load_embedding_model(151936, 1536, "embeddings_qwen.pth", "un
 # for w, s in top_words:
 #     print(f"{w:15s}  {s:.4f}")
 
-#6
+#7
 
 # car = get_token_embedding(model, tokenizer, "car")
 # today = get_token_embedding(model, tokenizer, "today")
@@ -117,7 +137,7 @@ model, tokenizer = load_embedding_model(151936, 1536, "embeddings_qwen.pth", "un
 
 #the three words are in the top 3
 
-#7
+#8
 
 # car = get_token_embedding(model, tokenizer, "car")
 # today = get_token_embedding(model, tokenizer, "today")
@@ -134,7 +154,7 @@ model, tokenizer = load_embedding_model(151936, 1536, "embeddings_qwen.pth", "un
 
 #all words in the top 5 except "canada"
 
-#8.
+#9.
 
 # car = get_token_embedding(model, tokenizer, "car")
 # today = get_token_embedding(model, tokenizer, "today")
@@ -156,7 +176,7 @@ model, tokenizer = load_embedding_model(151936, 1536, "embeddings_qwen.pth", "un
 
 #no words in the top 20
 
-#9.
+#10.
 
 # car = get_token_embedding(model, tokenizer, "car")
 # today = get_token_embedding(model, tokenizer, "today")
@@ -173,3 +193,37 @@ model, tokenizer = load_embedding_model(151936, 1536, "embeddings_qwen.pth", "un
 #     print(f"{w:15s}  {s:.4f}")
 
 #not very good
+
+#11.
+
+# camping = get_token_embedding(model, tokenizer, "camping")
+# canada = get_token_embedding(model, tokenizer, "canada")
+# vacation = get_token_embedding(model, tokenizer, "vacation")
+# zoo = get_token_embedding(model, tokenizer, "zoo")
+# apple = get_token_embedding(model, tokenizer, "apple")
+# morning = get_token_embedding(model, tokenizer, "morning")
+
+# weighted_embedding_mixed_cat6 = (1.0/6.0)*camping + (1.0/6.0)*canada + (1.0/6.0)*vacation + (1.0/6.0)*zoo + (1.0/6.0)*apple + (1.0/6.0)*morning
+
+# top_words = find_similar_logits(model, tokenizer, weighted_embedding_mixed_cat6, n=20)
+
+# for w, s in top_words:
+#     print(f"{w:15s}  {s:.4f}")
+
+#not very good, decompose the words. only "apple" in top 20
+
+11. #Short words
+
+one = get_token_embedding(model, tokenizer, "one")
+apple = get_token_embedding(model, tokenizer, "apple") #appears
+cow = get_token_embedding(model, tokenizer, "cow") #appears
+zoo = get_token_embedding(model, tokenizer, "zoo")
+gym = get_token_embedding(model, tokenizer, "gym")
+job = get_token_embedding(model, tokenizer, "job") #appears
+
+weighted_embedding_mixed_cat7 = (1.0/6.0)*one + (1.0/6.0)*apple + (1.0/6.0)*cow + (1.0/6.0)*zoo + (1.0/6.0)*gym + (1.0/6.0)*job
+
+top_words = find_similar_logits(model, tokenizer, weighted_embedding_mixed_cat7, n=20)
+
+for w, s in top_words:
+    print(f"{w:15s}  {s:.4f}")
