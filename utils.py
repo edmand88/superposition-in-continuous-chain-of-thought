@@ -1,4 +1,8 @@
 import torch
+import itertools
+import random
+
+random.seed(42)
 
 def find_similar_embeddings(model, tokenizer, target_embedding, n=10):
     """
@@ -71,3 +75,35 @@ def get_token_embedding(model, tokenizer, word):
 def get_all_tokens(tokenizer):
     tokens = list(tokenizer.get_vocab().keys())
     return tokens
+
+def token_len_one_verifier(tokenizer, word):
+    tokens = tokenizer.tokenize(word)
+    return len(tokens) == 1
+
+def test_combinations(model, tokenizer, words, embeddings, combination_sizes, top_n=30):
+    results = {}
+    words = sorted(words)
+
+    for size in combination_sizes:
+        print(f"\nCombination size: {size}")
+        results[size] = 0.0
+        combos = list(itertools.combinations(words, size))
+        
+        if len(combos) > 1000:
+            combos = random.sample(combos, 1000)
+
+        for combo in combos:
+            # compute weighted average embedding
+            weights = torch.ones(size) / size
+            weighted_embedding = sum(weights[i] * embeddings[combo[i]] for i in range(size))
+
+            # get top N logits
+            top_words = find_similar_logits(model, tokenizer, weighted_embedding, n=top_n)
+
+            # count how many original combo words appear in top N
+            count_in_top = sum(1 for w, _ in top_words if w in combo)
+            results[size] += count_in_top / len(combos)
+
+    print(f"{results[size]}\n")
+
+    return results
