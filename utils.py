@@ -235,3 +235,46 @@ def plot_results(results_dict, title="Experiment Result"):
         ax.annotate(f"{y:.2f}", (x, y), textcoords="offset points", xytext=(0, 6), ha="center", fontsize=9)
 
     ax.legend(frameon=False)
+
+
+def plot_results_bar(results_dict, title, y_label):
+    """
+    Plot a line chart from a dict {n: average_success}.
+
+    - x-axis: number of superposed tokens (n)
+    - y-axis: average success count (captured in top_k)
+    - default style: line with markers, grid on
+    - annotate each point with its value
+    - can be called multiple times to overlay multiple lines
+
+    The function uses the provided `title` as the line label so that multiple
+    calls can show multiple categories in a legend. The overall axes title is
+    set once (if not already set) to "Superposition Success vs Token Count".
+    """
+    if not isinstance(results_dict, dict) or len(results_dict) == 0:
+        raise ValueError("results_dict must be a non-empty dict mapping n -> average_success.")
+
+    xs = sorted(results_dict.keys())
+    ys = [results_dict[n] for n in xs]
+
+    plt.bar(xs, ys)
+    plt.title(title)
+    plt.xlabel('Number of superposed tokens')
+    plt.ylabel(y_label)
+
+    plt.show()
+
+
+def plot_results_bar_multi(dict_a, dict_b, title, y_label):
+
+    xs = sorted(dict_a.keys())
+    ys_a = [dict_a[n] for n in xs]
+    ys_b = [dict_b[n] for n in xs]
+
+    plt.bar(xs, ys_a, label='First token')
+    plt.bar(xs, ys_b, label='Last token')
+    plt.title(title)
+    plt.xlabel('Number of superposed tokens')
+    plt.ylabel(y_label)
+
+    plt.show()
