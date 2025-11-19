@@ -15,9 +15,9 @@ model = AutoModelForCausalLM.from_pretrained(model_name)
 # extract embedding
 embeddings = model.get_input_embeddings()
 print(f"Extracted Embeddings Layer for {model_name}: {embeddings}")
-torch.save(embeddings.state_dict(), "embeddings_qwen.pth")
+torch.save(embeddings.state_dict(), f"{tokenizer_name}_embeddings_qwen.pth")
 
 # extract unembedding
 unembedding = model.lm_head.weight
 print(f"Extracted Unembeddings Layer for {model_name}: {unembedding}")
-torch.save(unembedding.detach().cpu(), "unembeddings_qwen.pth")
+torch.save(unembedding.detach().cpu(), f"{tokenizer_name}_unembeddings_qwen.pth")
