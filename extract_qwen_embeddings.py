@@ -9,6 +9,12 @@ model_name = tokenizer_name
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
 tokenizer.add_special_tokens({'pad_token': '[PAD]'})
 
+vocab_size = tokenizer.vocab_size
+print("Vocab size:", vocab_size)
+
+embedding_dim = model.get_input_embeddings().embedding_dim
+print("Embedding dimension:", embedding_dim)
+
 # Load the pre-trained model
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
