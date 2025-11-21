@@ -1,5 +1,9 @@
 import torch
+import os
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
+
+save_dir = "/content"
+os.makedirs(save_dir, exist_ok=True)
 
 #should try other maybe larger models
 tokenizer_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
@@ -22,9 +26,10 @@ print("Embedding dimension:", embedding_dim)
 # extract embedding
 embeddings = model.get_input_embeddings()
 print(f"Extracted Embeddings Layer for {model_name}: {embeddings}")
-torch.save(embeddings.state_dict(), f"{filename_safe}_embeddings_qwen.pth")
+torch.save(embeddings.state_dict(), os.path.join(save_dir, f"{filename_safe}_embeddings_qwen.pth"))
 
 # extract unembedding
 unembedding = model.lm_head.weight
 print(f"Extracted Unembeddings Layer for {model_name}: {unembedding}")
-torch.save(unembedding.detach().cpu(), f"{filename_safe}_unembeddings_qwen.pth")
+torch.save(unembedding.detach().cpu(), os.path.join(save_dir, f"{filename_safe}_unembeddings_qwen.pth"))
+
