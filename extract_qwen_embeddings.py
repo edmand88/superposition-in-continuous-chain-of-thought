@@ -2,7 +2,7 @@ import torch
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 
 #should try other maybe larger models
-tokenizer_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+tokenizer_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 model_name = tokenizer_name
 
 # Load the tokenizer
