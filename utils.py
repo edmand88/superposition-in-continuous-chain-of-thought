@@ -111,6 +111,6 @@ def test_combinations(model, tokenizer, words, embeddings, combination_sizes, to
             count_in_top = sum(1 for w, _ in top_words if w in combo)
             results[size] += count_in_top / len(combos)
 
-    print(f"{results[size]}\n")
+        print(f"{results[size]}\n")
 
     return results
