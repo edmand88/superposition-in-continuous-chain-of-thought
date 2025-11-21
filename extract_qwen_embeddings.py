@@ -6,7 +6,7 @@ save_dir = "/content"
 os.makedirs(save_dir, exist_ok=True)
 
 #should try other maybe larger models
-tokenizer_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-1.5B"
+tokenizer_name = "deepseek-ai/DeepSeek-R1-Distill-Qwen-7B"
 filename_safe = tokenizer_name.replace("/", "_")
 model_name = tokenizer_name
 
