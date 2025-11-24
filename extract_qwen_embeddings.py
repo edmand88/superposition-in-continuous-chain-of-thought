@@ -9,7 +9,6 @@ model_name = tokenizer_name
 
 # Load the tokenizer
 tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
-tokenizer.add_special_tokens({'pad_token': '[PAD]'})
 
 vocab_size = tokenizer.vocab_size
 print("Vocab size:", vocab_size)
