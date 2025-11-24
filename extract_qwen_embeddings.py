@@ -1,4 +1,5 @@
 import torch
+import os
 from transformers import AutoTokenizer, AutoModel, AutoModelForCausalLM
 
 #should try other maybe larger models
@@ -16,15 +17,15 @@ print("Vocab size:", vocab_size)
 # Load the pre-trained model
 model = AutoModelForCausalLM.from_pretrained(model_name)
 
-embedding_dim = model.get_input_embeddings().embedding_dim
+embedding_dim = model.model.embed_tokens.weight.shape
 print("Embedding dimension:", embedding_dim)
 
 # extract embedding
-embeddings = model.get_input_embeddings()
+embeddings = model.model.embed_tokens.weight
 print(f"Extracted Embeddings Layer for {model_name}: {embeddings}")
-torch.save(embeddings.state_dict(), f"{filename_safe}_embeddings_qwen.pth")
+torch.save(embeddings.detach(), os.path.join(f"{filename_safe}_embeddings_qwen.pth"))
 
 # extract unembedding
 unembedding = model.lm_head.weight
 print(f"Extracted Unembeddings Layer for {model_name}: {unembedding}")
-torch.save(unembedding.detach().cpu(), f"{filename_safe}_unembeddings_qwen.pth")
+torch.save(unembedding.detach(), os.path.join(f"{filename_safe}_unembeddings_qwen.pth"))
