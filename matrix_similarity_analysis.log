@@ -1,0 +1,120 @@
+Logging output to: /home/comp/f2256768/SCCOT/models/matrix_similarity_analysis.log
+==================================================
+Analyzing: DeepSeek-R1-Distill-Qwen-1.5B
+==================================================
+
+[1] Basic Structure
+Embedding Shape:   torch.Size([151936, 1536])
+Unembedding Shape: torch.Size([151936, 1536])
+Tie Word Embeddings Config: False
+Shapes match directly.
+Weights are UNTIED and distinct.
+Unembedding Bias: None
+
+[2] Global Distance Metrics
+Frobenius Distance: 117.5441
+Relative Distance:  0.2559
+
+[3] Cosine Similarity Analysis
+Average Cosine Similarity: 0.9658
+
+[4] Norm Analysis
+Avg Embedding Norm:   1.1661
+Avg Unembedding Norm: 1.1393
+
+[5] Element-wise Similarity Analysis
+Max Absolute Difference: 0.125469
+Mean Absolute Difference: 0.005832
+Elements within 1e-05: 0.68%
+Elements within 0.0001: 1.11%
+Elements within 0.001: 12.01%
+Elements within 0.01: 83.13%
+
+[6] torch.allclose Analysis
+rtol       atol       Description  Result
+---------------------------------------------
+1e-05      1e-08      Default      False
+0.0001     1e-05      Relaxed      False
+0.001      0.0001     Loose        False
+0.01       0.001      Very Loose   False
+0.1        0.1        Coarse       False
+
+==================================================
+Analyzing: Qwen3-4B
+==================================================
+
+[1] Basic Structure
+Embedding Shape:   torch.Size([151936, 2560])
+Unembedding Shape: torch.Size([151936, 2560])
+Tie Word Embeddings Config: True
+Shapes match directly.
+Weights are TIED (Same object in memory).
+Unembedding Bias: None
+
+[2] Global Distance Metrics
+Frobenius Distance: 0.0000
+Relative Distance:  0.0000
+
+[3] Cosine Similarity Analysis
+Average Cosine Similarity: 1.0000
+
+[4] Norm Analysis
+Avg Embedding Norm:   1.0873
+Avg Unembedding Norm: 1.0873
+
+[5] Element-wise Similarity Analysis
+Max Absolute Difference: 0.000000
+Mean Absolute Difference: 0.000000
+Elements within 1e-05: 100.00%
+Elements within 0.0001: 100.00%
+Elements within 0.001: 100.00%
+Elements within 0.01: 100.00%
+
+[6] torch.allclose Analysis
+rtol       atol       Description  Result
+---------------------------------------------
+1e-05      1e-08      Default      True
+0.0001     1e-05      Relaxed      True
+0.001      0.0001     Loose        True
+0.01       0.001      Very Loose   True
+0.1        0.1        Coarse       True
+
+==================================================
+Analyzing: DeepSeek-R1-Distill-Qwen-7B
+==================================================
+
+[1] Basic Structure
+Embedding Shape:   torch.Size([152064, 3584])
+Unembedding Shape: torch.Size([152064, 3584])
+Tie Word Embeddings Config: False
+Shapes match directly.
+Weights are UNTIED and distinct.
+Unembedding Bias: None
+
+[2] Global Distance Metrics
+Frobenius Distance: 592.8452
+Relative Distance:  1.3711
+
+[3] Cosine Similarity Analysis
+Average Cosine Similarity: 0.0013
+
+[4] Norm Analysis
+Avg Embedding Norm:   1.0362
+Avg Unembedding Norm: 1.0288
+
+[5] Element-wise Similarity Analysis
+Max Absolute Difference: 1.932617
+Mean Absolute Difference: 0.019225
+Elements within 1e-05: 0.09%
+Elements within 0.0001: 0.39%
+Elements within 0.001: 4.00%
+Elements within 0.01: 35.95%
+
+[6] torch.allclose Analysis
+rtol       atol       Description  Result
+---------------------------------------------
+1e-05      1e-08      Default      False
+0.0001     1e-05      Relaxed      False
+0.001      0.0001     Loose        False
+0.01       0.001      Very Loose   False
+0.1        0.1        Coarse       False
