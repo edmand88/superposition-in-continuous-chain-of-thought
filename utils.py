@@ -1,3 +1,4 @@
+import numpy as np
 import torch
 import itertools
 import random
@@ -122,6 +123,7 @@ def test_combinations(
     n_values=[3, 5, 10, 15, 20],
     num_trials=100,
     top_k=30,
+    superposition_mode='uniform'
 ):
     """
     Run superposition experiments on a given vocabulary list.
@@ -180,7 +182,12 @@ def test_combinations(
             sampled_words = random.sample(candidates, n)
 
             emb_stack = torch.stack([precomputed[w]["emb"] for w in sampled_words], dim=0)
-            combined_emb = emb_stack.mean(dim=0)
+            if superposition_mode == 'uniform':
+                combined_emb = emb_stack.mean(dim=0)
+            elif superposition_mode == 'random':
+                weights = np.random.rand(n)
+                weights = torch.nn.functional.softmax(torch.tensor(weights))
+                combined_emb = torch.matmul(torch.transpose(emb_stack, 0, 1), weights.float())
 
             if not isinstance(combined_emb, torch.Tensor):
                 combined_emb = torch.tensor(combined_emb)
